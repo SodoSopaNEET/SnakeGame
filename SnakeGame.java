@@ -20,7 +20,6 @@ public class SnakeGame extends JFrame implements ActionListener, KeyListener {
     private Timer timer; // 定時器
     private int score1; // 分數1
     private int score2; // 分數2
-    // private boolean gridDrawn = false;
     private boolean isAIPlaying = false;
     private boolean isTwoPlayer; // 是否有玩家2
 
@@ -105,16 +104,16 @@ public class SnakeGame extends JFrame implements ActionListener, KeyListener {
         Point newHead2;
 
         switch (direction2) {
-            case 0: // Up
+            case 0: // 上
                 newHead2 = new Point(head2.x, (head2.y - 1 + GRID_SIZE) % GRID_SIZE);
                 break;
-            case 1: // Right
+            case 1: // 右
                 newHead2 = new Point((head2.x + 1) % GRID_SIZE, head2.y);
                 break;
-            case 2: // Down
+            case 2: // 下
                 newHead2 = new Point(head2.x, (head2.y + 1) % GRID_SIZE);
                 break;
-            case 3: // Left
+            case 3: // 左
                 newHead2 = new Point((head2.x - 1 + GRID_SIZE) % GRID_SIZE, head2.y);
                 break;
             default:
@@ -171,25 +170,30 @@ public class SnakeGame extends JFrame implements ActionListener, KeyListener {
     private void gameOver() {
         timer.stop(); // 停止計時器
         if (isTwoPlayer) {
-            if (!isAIPlaying){
+            if (!isAIPlaying) {
                 if (score1 > score2) {
-                    JOptionPane.showMessageDialog(this, "Game Over, AI Wins!" , "Game Over", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Game Over, AI Wins!", "Game Over",
+                            JOptionPane.INFORMATION_MESSAGE);
                 } else if (score2 > score1) {
-                    JOptionPane.showMessageDialog(this, "Game Over, Player Wins!" , "Game Over", JOptionPane.INFORMATION_MESSAGE);
-                }else {
-                    JOptionPane.showMessageDialog(this, "Game Over, Tie" , "Game Over", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Game Over, Player Wins!", "Game Over",
+                            JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Game Over, Tie", "Game Over", JOptionPane.INFORMATION_MESSAGE);
                 }
-            }else {
+            } else {
                 if (score1 > score2) {
-                    JOptionPane.showMessageDialog(this, "Game Over, Player1 Wins!" , "Game Over", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Game Over, Player1 Wins!", "Game Over",
+                            JOptionPane.INFORMATION_MESSAGE);
                 } else if (score2 > score1) {
-                    JOptionPane.showMessageDialog(this, "Game Over, Player2 Wins!" , "Game Over", JOptionPane.INFORMATION_MESSAGE);
-                }else {
-                    JOptionPane.showMessageDialog(this, "Game Over, Tie" , "Game Over", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Game Over, Player2 Wins!", "Game Over",
+                            JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Game Over, Tie", "Game Over", JOptionPane.INFORMATION_MESSAGE);
                 }
             }
-        }else {
-            JOptionPane.showMessageDialog(this, "Game Over, Score:" + score1 , "Game Over", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(this, "Game Over, Score:" + score1, "Game Over",
+                    JOptionPane.INFORMATION_MESSAGE);
         }
         System.exit(0); // 顯示遊戲結束訊息並退出遊戲
     }
@@ -207,6 +211,7 @@ public class SnakeGame extends JFrame implements ActionListener, KeyListener {
         repaint(); // 重新繪製遊戲畫面
     }
 
+    // 判斷鍵盤輸入
     @Override
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
@@ -218,6 +223,7 @@ public class SnakeGame extends JFrame implements ActionListener, KeyListener {
         }
     }
 
+    // 單人模式的方向控制
     private void handleSinglePlayerInput(int key) {
         switch (key) {
             case KeyEvent.VK_UP:
@@ -243,6 +249,7 @@ public class SnakeGame extends JFrame implements ActionListener, KeyListener {
         }
     }
 
+    // 雙人模式的方向控制
     private void handleTwoPlayerInput(int key) {
         switch (key) {
             // 玩家1控制方向
@@ -299,8 +306,7 @@ public class SnakeGame extends JFrame implements ActionListener, KeyListener {
     public void keyReleased(KeyEvent e) {
     }
 
-
-
+    // 畫出視窗
     @Override
     public void paint(Graphics g) {
         super.paint(g);
@@ -331,19 +337,19 @@ public class SnakeGame extends JFrame implements ActionListener, KeyListener {
 
         // 顯示分數
         g.setColor(Color.BLACK);
-
+        // 分開顯示分數
         if (!isAIPlaying && !isTwoPlayer) {
             g.drawString("AI : " + score1, 10 + insets.left, 20 + insets.top);
         }
         if (isTwoPlayer) {
-            if (isAIPlaying){
+            if (isAIPlaying) {
                 g.drawString("Player1 : " + score1, 10 + insets.left, 20 + insets.top);
                 g.drawString("Player2 : " + score2, 200 + insets.left, 20 + insets.top);
-            }else {
+            } else {
                 g.drawString("Player : " + score2, 10 + insets.left, 20 + insets.top);
                 g.drawString("AI : " + score1, 200 + insets.left, 20 + insets.top);
             }
-        }if (isAIPlaying && !isTwoPlayer) {
+        } else if (isAIPlaying) {
             g.drawString("Score: " + score1, 10 + insets.left, 20 + insets.top);
         }
     }
@@ -356,9 +362,8 @@ public class SnakeGame extends JFrame implements ActionListener, KeyListener {
         boolean danger_down = false;
         boolean danger_right = false;
         boolean danger_left = false;
+        // 判斷撞到自己的危險判定(頭的四個方位是否有自己身體)
         for (Point point : snake) {
-            // System.out.println("point:" + point.equals(new Point(head.x, (head.y - 1 +
-            // GRID_SIZE) % GRID_SIZE)));
             if (point.equals(new Point(head.x, (head.y - 1 + GRID_SIZE) % GRID_SIZE))) {
                 danger_up = true;
             } else if (point.equals(new Point(head.x, (head.y + 1) % GRID_SIZE))) {
@@ -369,10 +374,9 @@ public class SnakeGame extends JFrame implements ActionListener, KeyListener {
                 danger_left = true;
             }
         }
+        // 撞到玩家的危險判定
         if (isTwoPlayer) {
             for (Point point : snake2) {
-                // System.out.println("point:" + point.equals(new Point(head.x, (head.y - 1 +
-                // GRID_SIZE) % GRID_SIZE)));
                 if (point.equals(new Point(head.x, (head.y - 1 + GRID_SIZE) % GRID_SIZE))) {
                     danger_up = true;
                 } else if (point.equals(new Point(head.x, (head.y + 1) % GRID_SIZE))) {
@@ -386,22 +390,17 @@ public class SnakeGame extends JFrame implements ActionListener, KeyListener {
         }
         // 檢查蛇頭與食物的相對位置
         if (head.x < foodPosition.x && !danger_right) {
-            if (isValidMove(1)) {
-                direction = 1; // 如果食物在右側，且向右移動是有效的，則向右移動
-            }
+
+            direction = 1; // 如果食物在右側，且向右移動是安全的，則向右移動
+
         } else if (head.x > foodPosition.x && !danger_left) {
-            if (isValidMove(3)) {
-                direction = 3; // 如果食物在左側，且向左移動是有效的，則向左移動
-            }
+            direction = 3; // 如果食物在左側，且向左移動是安全的，則向左移動
         } else if (head.y < foodPosition.y && !danger_down) {
-            if (isValidMove(2)) {
-                direction = 2; // 如果食物在下方，且向下移動是有效的，則向下移動
-            }
+            direction = 2; // 如果食物在下方，且向下移動是安全的，則向下移動
         } else if (head.y > foodPosition.y && !danger_up) {
-            if (isValidMove(0)) {
-                direction = 0; // 如果食物在上方，且向上移動是有效的，則向上移動
-            }
-        } else {
+            direction = 0; // 如果食物在上方，且向上移動是安全的，則向上移動
+
+        } else {// 如果三個方向是危險，方向改成為一安全方向
             if (danger_down && danger_left && danger_up) {
                 direction = 1;
             } else if (danger_down && danger_right && danger_up) {
@@ -410,7 +409,7 @@ public class SnakeGame extends JFrame implements ActionListener, KeyListener {
                 direction = 2;
             } else if (danger_down && danger_left && danger_right) {
                 direction = 0;
-            } else {
+            } else {// 如果行進方向是危險，改變方向
                 if ((direction == 0 && danger_up)) {
                     direction = 1;
                 } else if ((direction == 2 && danger_down)) {
@@ -422,33 +421,6 @@ public class SnakeGame extends JFrame implements ActionListener, KeyListener {
                 }
             }
         }
-    }
-
-    // 檢查移動是否有效（不與蛇身相撞或超出邊界）
-    private boolean isValidMove(int dir) {
-        Point head = snake.get(0); // 獲取蛇頭位置
-        Point newHead;
-
-        switch (dir) {
-            case 0: // 上
-                newHead = new Point(head.x, (head.y - 1 + GRID_SIZE) % GRID_SIZE);
-                break;
-            case 1: // 右
-                newHead = new Point((head.x + 1) % GRID_SIZE, head.y);
-                break;
-            case 2: // 下
-                newHead = new Point(head.x, (head.y + 1) % GRID_SIZE);
-                break;
-            case 3: // 左
-                newHead = new Point((head.x - 1 + GRID_SIZE) % GRID_SIZE, head.y);
-                break;
-            default:
-                return false;
-        }
-
-        // 檢查新位置是否與蛇身重疊或超出邊界
-        return !snake.contains(newHead)
-                && !(newHead.x < 0 || newHead.x >= GRID_SIZE || newHead.y < 0 || newHead.y >= GRID_SIZE);
     }
 
 }
