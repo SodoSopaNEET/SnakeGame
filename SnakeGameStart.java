@@ -21,7 +21,7 @@ public class SnakeGameStart extends JFrame {
         String[] speedOptions = { "Slow", "Medium", "Fast" }; // 速度選項
         speedComboBox = new JComboBox<>(speedOptions); // 創建速度選擇的下拉式選單
         JLabel modeLabel = new JLabel("Game Mode:"); // 遊玩模式標籤
-        String[] modeOptions = { "Single Player", "Two Players", "Play with AI" }; // 遊玩模式選項
+        String[] modeOptions = { "Single Player", "Two Players", "Play with AI", "AI" }; // 遊玩模式選項
         modeComboBox = new JComboBox<>(modeOptions);
 
         JButton startButton = new JButton("Start"); // 開始按鈕
@@ -78,6 +78,10 @@ public class SnakeGameStart extends JFrame {
             case "Play with AI":
                 isAIPlaying = true;
                 isTwoPlayer = true;
+                break;
+            case "AI":
+                isAIPlaying = true;
+                isTwoPlayer = false;
                 break;
         }
 
