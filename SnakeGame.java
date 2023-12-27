@@ -346,16 +346,6 @@ public class SnakeGame extends JFrame implements ActionListener, KeyListener {
         }if (isAIPlaying && !isTwoPlayer) {
             g.drawString("Score: " + score1, 10 + insets.left, 20 + insets.top);
         }
-
-
-        // 繪製網格
-        // g.setColor(Color.BLACK);
-        // for (int i = 0; i <= GRID_SIZE; i++) {
-        // g.drawLine(i * actualTileSize + insets.left, 1 * actualTileSize + insets.top,
-        // i * actualTileSize + insets.left, GRID_SIZE * actualTileSize + insets.top);
-        // g.drawLine(1 * actualTileSize + insets.left, i * actualTileSize + insets.top,
-        // GRID_SIZE * actualTileSize + insets.left, i * actualTileSize + insets.top);
-        // }
     }
 
     // AI 控制蛇移動
