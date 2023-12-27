@@ -343,7 +343,7 @@ public class SnakeGame extends JFrame implements ActionListener, KeyListener {
                 g.drawString("Player : " + score2, 10 + insets.left, 20 + insets.top);
                 g.drawString("AI : " + score1, 200 + insets.left, 20 + insets.top);
             }
-        }else {
+        }if (isAIPlaying && !isTwoPlayer) {
             g.drawString("Score: " + score1, 10 + insets.left, 20 + insets.top);
         }
 
