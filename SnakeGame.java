@@ -282,17 +282,17 @@ public class SnakeGame extends JFrame implements ActionListener, KeyListener {
                 break;
             case KeyEvent.VK_D:
                 if (direction2 != 3) {
-                    direction2 = 1; // D key: 玩家2往右
+                    direction2 = 1; // D: 玩家2往右
                 }
                 break;
             case KeyEvent.VK_S:
                 if (direction2 != 0) {
-                    direction2 = 2; // S key: 玩家2往下
+                    direction2 = 2; // S: 玩家2往下
                 }
                 break;
             case KeyEvent.VK_A:
                 if (direction2 != 1) {
-                    direction2 = 3; // A key: 玩家2往左
+                    direction2 = 3; // A: 玩家2往左
                 }
                 break;
         }
